@@ -518,11 +518,11 @@ public abstract class EndDragonFightMixin implements IDragonFight {
     @Unique
     private List<EndCrystal> betterendisland$checkRespawnCrystals(BlockPos centerPos) {
         List<EndCrystal> foundCrystals = Lists.newArrayList();
-        int baseY = this.betterendisland$cachedTowerSpawnY != null ? this.betterendisland$cachedTowerSpawnY : centerPos.getY();
+        int towerY = this.betterendisland$cachedTowerSpawnY != null ? this.betterendisland$cachedTowerSpawnY : 60;
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos relPos = centerPos.relative(direction, 7);
-            AABB crystalCheckbox = new AABB(relPos.getX() - 1, baseY - 3, relPos.getZ() - 1, relPos.getX() + 1, baseY + 2, relPos.getZ() + 1);
+            AABB crystalCheckbox = new AABB(relPos.getX() - 1, towerY - 3, relPos.getZ() - 1, relPos.getX() + 1, towerY + 2, relPos.getZ() + 1);
             List<EndCrystal> crystalsInDirection = this.level.getEntitiesOfClass(EndCrystal.class, crystalCheckbox);
             foundCrystals.addAll(crystalsInDirection);
         }
@@ -533,11 +533,11 @@ public abstract class EndDragonFightMixin implements IDragonFight {
     @Unique
     private List<EndCrystal> betterendisland$checkVanillaRespawnCrystals(BlockPos centerPos) {
         List<EndCrystal> foundCrystals = Lists.newArrayList();
-        int baseY = this.betterendisland$cachedTowerSpawnY != null ? this.betterendisland$cachedTowerSpawnY : centerPos.getY();
+        int towerY = this.betterendisland$cachedTowerSpawnY != null ? this.betterendisland$cachedTowerSpawnY : 60;
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos relPos = centerPos.relative(direction, 2);
-            AABB crystalCheckbox = new AABB(relPos.getX() - 1, baseY - 3, relPos.getZ() - 1, relPos.getX() + 1, baseY + 2, relPos.getZ() + 1);
+            AABB crystalCheckbox = new AABB(relPos.getX() - 1, towerY - 3, relPos.getZ() - 1, relPos.getX() + 1, towerY + 2, relPos.getZ() + 1);
             List<EndCrystal> crystalsInDirection = this.level.getEntitiesOfClass(EndCrystal.class, crystalCheckbox);
             foundCrystals.addAll(crystalsInDirection);
         }
