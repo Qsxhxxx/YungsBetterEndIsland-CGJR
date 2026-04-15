@@ -31,7 +31,7 @@ repositories {
 def modVersion = version
 
 archivesBaseName = "${mod_name}"
-version = "CGJR-0.0.0"
+version = "CGJR-${version}"
 group = maven_group
 
 minecraft {
