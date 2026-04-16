@@ -371,23 +371,30 @@ public abstract class EndDragonFightMixin implements IDragonFight {
     @Unique
     private int betterendisland$computeTowerSpawnY() {
         int[][] cardinalPoints = {{14, 0}, {-14, 0}, {0, 14}, {0, -14}};
-        long totalY = 0;
-        int validCount = 0;
+        List<Integer> yValues = new ArrayList<>();
         BetterEndIslandCommon.LOGGER.info("Computing tower spawn Y...");
         for (int[] pt : cardinalPoints) {
             int topBlockY = betterendisland$getTopBlockY(pt[0], pt[1]);
             BetterEndIslandCommon.LOGGER.info("Cardinal point ({}, {}) top block Y: {}", pt[0], pt[1], topBlockY);
             if (topBlockY > 0) {
-                totalY += topBlockY;
-                validCount++;
+                yValues.add(topBlockY);
             }
         }
-        if (validCount > 0) {
-            int result = (int)(totalY / validCount);
-            BetterEndIslandCommon.LOGGER.info("Computed tower spawn Y at: {}", result);
-            return result;
+        if (yValues.isEmpty()) {
+            BetterEndIslandCommon.LOGGER.info("No valid cardinal points, using default Y: 65");
+            return 65;
         }
-        return -1;
+        if (yValues.size() > 1) {
+            int maxY = yValues.stream().max(Integer::compareTo).orElse(0);
+            yValues.remove(Integer.valueOf(maxY));
+        }
+        long totalY = 0;
+        for (int y : yValues) {
+            totalY += y;
+        }
+        int result = (int)(totalY / yValues.size());
+        BetterEndIslandCommon.LOGGER.info("Computed tower spawn Y at: {}", result);
+        return result;
     }
 
     @Unique
@@ -846,3 +853,4 @@ public abstract class EndDragonFightMixin implements IDragonFight {
         this.betterendisland$worldSpecificData.setBuildY(y);
     }
 }
+
