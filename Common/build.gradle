@@ -1,0 +1,7 @@
+plugins {
+    id 'java'
+}
+
+archivesBaseName = "${mod_name}"
+version = "${mc_version}-Common-${version}"
+group = maven_group
