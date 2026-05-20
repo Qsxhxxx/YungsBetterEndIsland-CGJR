@@ -394,7 +394,15 @@ public abstract class EndDragonFightMixin implements IDragonFight {
         } else {
             BetterEndIslandCommon.LOGGER.info("Found that the dragon has not yet been killed in this world.");
             this.previouslyKilled = false;
+        }
+
+        // 总是检查并生成初始tower，确保首次进入末地时有tower结构
+        // 不依赖hasActiveExitPortal()的判断，避免误判导致不生成tower
+        if (this.portalLocation == null || this.level.getBlockState(this.portalLocation).isAir()) {
+            BetterEndIslandCommon.LOGGER.info("Generating initial tower structure...");
             this.betterendisland$spawnPortal(true, false);
+        } else {
+            BetterEndIslandCommon.LOGGER.info("Tower structure already exists at {}, skipping generation.", this.portalLocation);
         }
 
         List<? extends EnderDragon> dragons = this.level.getDragons();
